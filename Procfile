@@ -1,1 +1,1 @@
-web waitress-serve application:app | pip install -r requirements.txt
+web waitress-serve application:app && pip install -r requirements.txt

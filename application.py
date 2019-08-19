@@ -710,4 +710,4 @@ def account():
 
 
 if __name__ == '__main__':
-	serve(app)
+	server(app)
