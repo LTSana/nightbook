@@ -26,9 +26,9 @@ if not os.getenv("DATABASE_URL"):
 # If you are making any CSS changes activate these to not save Cache of the page
 @app.after_request
 def after_request(response):
-    #response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    #response.headers["Expires"] = 0
-    #response.headers["Pragma"] = "no-cache"
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Expires"] = 0
+    response.headers["Pragma"] = "no-cache"
     return response
 
 # Configure session to use filesystem
@@ -709,5 +709,5 @@ def account():
 	return render_template("account.html", account_details=account_details)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	server(app)

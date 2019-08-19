@@ -33,7 +33,7 @@ function check_prediction_search() {
 var typingtimer_search;
 function search_bar_click() {
 	// Show a loading gif
-	document.getElementById("book_results").innerHTML = "<img alt='loading...' src='static/loading_gifs/double_ring.gif' style='width: 5%;'>";
+	document.getElementById("book_results").innerHTML = "<img alt='loading...' id='loading_gif' src='static/loading_gifs/double_ring.gif'>";
 
 	clearInterval(typingtimer_search);
 	if ($("#search_bar").val()) {

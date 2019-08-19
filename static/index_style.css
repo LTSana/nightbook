@@ -30,11 +30,17 @@ body {
   padding: 10px;
   width: 280px; }
 
+#loading_gif {
+  width: 5%; }
+
 @media screen and (max-width: 600px) {
   .container_boxes > div {
     margin: 2px;
     padding: 10px;
-    width: 280px; } }
+    width: 280px; }
+
+  #loading_gif {
+    width: 15%; } }
 #review_button {
   background-color: #007032;
   color: white; }
