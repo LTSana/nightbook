@@ -5,6 +5,9 @@ import os
 import requests
 import time
 
+# For production server
+from waitress import serve
+
 from flask import Flask, session, render_template, redirect, request, flash, jsonify
 from flask_session import Session
 from sqlalchemy import create_engine
@@ -707,4 +710,4 @@ def account():
 
 
 if __name__ == "__main__":
-	serve(app)
+	server(app)
