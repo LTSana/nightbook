@@ -15,7 +15,7 @@ All images used in the App are my own, avoiding copyright issues, the only thing
 1. Install Python 3 or higher
 2. Open Command Prompt
 3. Run: "cd " + the path to the program. Example( "cd Documents\projects\project1" )
-4. Run: "pip install flask"
+4. Run: "pip install -r requirements.txt"
 5. Run: "set FLASK_APP=application.py"
 6. Run: "set FLASK_ENV=development"
 7. Run: "set FLASK_DEBUG=1"
