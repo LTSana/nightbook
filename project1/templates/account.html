@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!-- Account Page -->
+{% extends "layout.html" %}
+
+{% block title %}
+	Account
+{% endblock %}
+
+{% block main %}
+<body background="/static/background_images/charging_phone.png">
+	<main class="container p-5">
+		<div class="card">
+			<div class="card-header">
+				<span id="card_header">ACCOUNT DETAILS</span>
+			</div>
+			<div class="card-body">
+				<p class="card-text">Name: {{account_details[0].first_name}} {{account_details[0].last_name}}</p>
+				<p class="card-text">Username: {{account_details[0].username}}</p>
+				<p class="card-text">E-mail: {{account_details[0].email}}</p>
+				<p class="card-text">Number of books rated: {{account_details[0].review_count}}</p>
+				<p class="card-text">Average Rating: {{account_details[0].average_rating}}</p>
+				<br>
+			</div>
+		</div>
+	</main>
+</body>
+{% endblock %}

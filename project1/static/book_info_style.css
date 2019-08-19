@@ -1,0 +1,30 @@
+/* SCSS for book information page */
+#local_stars {
+  width: 20%; }
+
+#user_stars {
+  width: 15%; }
+
+#image_1 {
+  width: 2%; }
+
+#image_2 {
+  width: 2%; }
+
+#book_rate_count {
+  display: none; }
+
+@media screen and (max-width: 600px) {
+  #local_stars {
+    width: 50%; }
+
+  #user_stars {
+    width: 50%; }
+
+  #image_1 {
+    width: 6%; }
+
+  #image_2 {
+    width: 6%; } }
+
+/*# sourceMappingURL=book_info_style.css.map */

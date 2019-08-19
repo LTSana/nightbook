@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<!-- some of the animation icons are provided by loading.io -->
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<!-- The little icon on the browser -->
+		<link href="/static/little_book_icon.png" rel="shortcut icon" type="image/png"/>
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		
+		<!-- Optional JavaScript -->
+    	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+		<title>
+			{% block title %}{% endblock %}
+		</title>
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="/">Night Book</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbar">
+				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+					<li class="nav-item active">
+						<a class="nav-link" href="/">Home</a>
+					</li>
+				</ul>
+				<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+					{% if not session.USER_ID %}
+					<li class="nav-item">
+						<a class="nav-link" href="/register">Register</a>
+					</li>
+					{% endif %}
+					{% if not session.USER_ID %}
+						<li class="nav-item">
+							<a class="nav-link" href="/login">Login</a>
+						</li>
+					{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="/account">Account</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/logout">Logout</a>
+						</li>
+					{% endif %}
+				</ul>
+			</div>
+		</nav>
+
+		{% with errors = get_flashed_messages(category_filter=["error"]) %}
+		{% with success = get_flashed_messages(category_filter=["success"]) %}
+
+			{% if errors %}
+				&nbsp;
+				<div class="container" style="min-height: 100%; width: 80%;">
+
+					{% for error in errors %}
+						<div class="alert alert-warning alert-dismissible" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+							<p>{{error}}</p>
+						</div>
+					{% endfor %}
+				</div>
+
+			{% endif %}
+
+			{% if success %}
+				&nbsp;
+				<div class="container" style="min-height: 100%; width: 80%;">
+
+					{% for success in success %}
+						<div class="alert alert-success alert-dismissible" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+						<p>{{success}}</p>
+						</div>
+					{% endfor %}
+				</div>
+
+			{% endif %}
+
+		{% endwith %}
+		{% endwith %}
+
+		<main>
+			{% block main %}{% endblock %}
+		</main>
+	</body>
+</html>

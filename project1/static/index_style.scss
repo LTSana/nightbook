@@ -1,0 +1,49 @@
+/* Style for index page */
+
+#search_bar {
+	width: 60%;
+	background-color: rgba(255, 255, 255, 0.527);
+	color: black;
+}
+#search_button {
+	background-color: white;
+}
+#search_button:hover {
+	background-color: rgba(255, 255, 255, 0.527);
+}
+body {
+	background-position: top;
+	background-repeat: repeat;
+	-webkit-background-size: auto;
+	-moz-background-size: auto;
+	-o-background-size: auto;
+	background-size: auto;
+	font-family: sans-serif;
+	background-attachment: fixed;
+}
+.container_boxes {
+	display: flex;
+	flex-wrap: wrap;
+	align-content: center;
+}
+.container_boxes > div {
+	margin: 20px;
+	padding: 10px;
+	width: 280px;
+}
+@media screen and (max-width: 600px) {
+	.container_boxes > div {
+		margin: 2px;
+		padding: 10px;
+		width: 280px;
+	}
+}
+
+#review_button {
+	background-color: rgb(0, 112, 50);
+	color: white;
+}
+#review_button:hover {
+	background-color: rgb(255, 145, 0);
+	color: rgb(255, 255, 255);
+}

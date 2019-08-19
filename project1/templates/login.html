@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!-- Login Page -->
+{% extends "layout.html" %}
+
+{% block title %}
+	Login
+{% endblock %}
+
+{% block main %}
+<body background="/static/background_images/love_cup.png">
+	<link href="static/login_style.css" rel="stylesheet" type="text/css">
+	<div class="login-box">
+		<form action="/login" method="POST">
+			&nbsp;
+			<h4>LOGIN</h4>
+			<div>
+				<input type="text" name="username" placeholder="Username" class="form-control" required>
+			</div>
+			&nbsp;
+			<div>
+				<input type="password" name="password" placeholder="Password" class="form-control" required>
+			</div>
+			<br>
+			<button type="submit" id="login_button" class="btn">Login</button>
+			&nbsp;
+		</form>
+		Need an Account? <a href="/register" id="register_button">Sign Up Here</a>
+	</div>
+</body>
+{% endblock %}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% extends "layout.html" %}
+
+{% block title %}
+	Home
+{% endblock %}
+
+{% block main %}
+<body background="static/background_images/flower_sun.png">
+	<link href="static/index_style.css" rel="stylesheet" type="text/css">
+	<script src="static/index_script.js" type="text/javascript"></script>
+
+	<main class="p-5">
+		<div class="form-inline justify-content-center">
+			<input id="search_bar" autofocus onkeyup="check_prediction_search()" list="list_book" class="form-control" placeholder="Search Book" type="search">
+			<datalist id="list_book">
+				<!-- Javascript will place options here -->
+			</datalist>
+			&nbsp;
+			<button id="search_button" onclick="search_bar_click()" class="btn">SEARCH</button>
+		</div>
+	
+		<div class="container container_boxes" id="book_results">
+			<!-- Javascript will place search results here -->
+		</div>
+	</main>
+</body>
+{% endblock %}

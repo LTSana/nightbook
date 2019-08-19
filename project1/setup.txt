@@ -1,0 +1,11 @@
+#!/bin/bash
+set FLASK_APP=application.py
+echo %FLASK_APP%
+set FLASK_DEBUG=1
+echo %FLASK_DEBUG%
+set FLASK_ENV=development
+echo %FLASK_ENV%
+
+
+>--- DATABASE ---<
+set DATABASE_URL="place your database URL/URI here"

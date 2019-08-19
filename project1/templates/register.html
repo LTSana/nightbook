@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- Register Page -->
+{% extends "layout.html" %}
+
+{% block title %}
+	Register
+{% endblock %}
+
+{% block main %}
+<main class="container p-5">
+	<body style="background-color: gray;">
+		<link href="static/register_style.css" type="text/css" rel="stylesheet">
+		<script src="static/register_script.js" type="text/javascript"></script>
+		<div class="card">
+			<div class="card-header text-center">
+				Register
+			</div>
+			<div class="card-body">
+				<form action="/register" method="POST">
+					<div class="form-row">
+						<div class="col-md-4 mb-3">
+							<label for="first_name">First name</label>
+							<input type="text" onkeyup="check_1()" id="first_name" name="first_name" class="form-control" placeholder="First name" required>
+							<div id="first_name_check">
+								<!--Javascript for this page will place an item here-->
+							</div>
+						</div>
+						<div class="col-md-4 mb-3">
+							<label for="last_name">Last name</label>
+							<input type="text" onkeyup="check_2()" id="last_name" name="last_name" class="form-control" placeholder="Last name" required>
+							<div id="last_name_check">
+								<!--Javascript for this page will place an item here-->
+							</div>
+						</div>
+						<div class="col-md-4 mb-3">
+							<label for="username">Username</label>
+							<input type="text" onkeyup="check_3()" id="username" name="username" class="form-control" placeholder="Username" aria-describedby="validationTooltipUsernamePrepend" required>
+							<div id="username_check">
+								<!--Javascript for this page will place an item here-->
+							</div>
+						</div>
+						</div>
+						<div class="form-row">
+							<div class="col-md-6 mb-3">
+								<label for="email">E-mail</label>
+								<input type="email" onkeyup="check_4()" id="email" name="email" class="form-control" placeholder="E-mail ( OPTIONAL )">
+								<div id="email_check">
+									<!--Javascript for this page will place an item here-->
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-md-6 mb-3">
+								<label for="password">Password</label>
+								<input type="password" onkeyup="check_5()" id="password" name="password" class="form-control" placeholder="Password (8-64 characters)" minlength="8" maxlength="64" required>
+								<div id="password_check">
+									<!--Javascript for this page will place an item here-->
+								</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-md-6 mb-3">
+								<label for="confirm_password">Confirm Password</label>
+								<input type="password" onkeyup="check_6()" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirm Password" minlength="8" maxlength="64" required>
+								<div id="confirm_password_check">
+									Please provide a valid password.
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-9 mb-3">
+						<div class="card" id="import_card">
+						<span id="important_title">*IMPORTANT</span><br>
+						I recommend not using a password you normally use. Use a password you don't need/use.<br>
+						The e-mail address is OPTIONAL, doesn't need to be a real e-mail address. Use a fake one.<br>
+						</div>
+					</div>
+					<div class="col-md-9 mb-3">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" required>
+							<label class="form-check-label" for="gridCheck">
+								Agree that you've read the *IMPORTANT box
+							</label>
+						</div>
+					</div>
+					<footer class="text-center">
+						<button class="btn btn-primary" id="register_button" type="submit">Register</button>
+					</footer>
+					&nbsp;
+				</form>
+			</div>
+		</div>
+	</body>
+</main>
+{% endblock %}
