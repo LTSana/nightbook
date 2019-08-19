@@ -689,6 +689,8 @@ def account():
 	"""SHOW ACCOUNT DETAILS"""
 
 	account_details = []
+	avg_rating_data_result = 0
+	count_data_result = 0
 
 	sql_command = """SELECT username, first_name, last_name, email FROM users WHERE user_id = :user_id"""
 	data_result = db.execute(sql_command, {"user_id": session["USER_ID"]}).fetchall()
