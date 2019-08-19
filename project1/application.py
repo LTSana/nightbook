@@ -171,6 +171,7 @@ def search_book():
 				print("API: ", book_results)
 				print()
 
+				# Get the average local rating from the Databse
 				sql_command = """SELECT AVG(star_rating) FROM review_records WHERE book_id = :book_id_given"""
 				local_average_rating = db.execute(sql_command, {"book_id_given": str(data_returned[alpha][0])}).fetchall()
 
@@ -180,6 +181,7 @@ def search_book():
 				print("LOCAL AVERAGE RATING: ", str(local_average_rating[0][0]))
 				print()
 
+				# Get the total amount of reviews locally
 				sql_command = """SELECT count(*) FROM review_records WHERE book_id = :book_id_given"""
 				local_count_review_data = db.execute(sql_command, {"book_id_given": str(data_returned[alpha][0])}).fetchall()
 
@@ -216,11 +218,6 @@ def search_book():
 @login_required
 def book_details(book_id):
 	"""Displays all online/local reviews of the book"""
-
-	if not session:
-		print("User has to be signed in.")
-		flash("Please log in to go to that page!", "error")
-		return redirect("/login")
 
 	print("DISPLAYING: ", book_id)
 
@@ -368,8 +365,6 @@ def book_details(book_id):
 	sql_command = """SELECT * FROM review_records WHERE book_id = :book_id"""
 	data_reviews_result = db.execute(sql_command, {"book_id": str(book_id)}).fetchall()
 
-	print(data_reviews_result)
-
 	for alpha in range(len(data_reviews_result)):
 
 		if str(data_reviews_result[alpha][2]) == "0.0":
@@ -419,17 +414,22 @@ def submit_review(book_id):
 
 	print("Submiting review for book ID: ", book_id)
 
+	# Get the comment and selected stars the user inputed
 	comment_details = str(request.form.get("comment_box"))
 	stars_give = float(request.form.get("book_rate_selected"))
 
 	print("Comment: ", comment_details)
 	print("Stars: ", stars_give)
 
+	# Check if the user already has a review for this book
 	sql_command = """SELECT * FROM review_records WHERE user_id = :user_id AND book_id = :book_id"""
 	data_result = db.execute(sql_command, {"user_id": str(session["USER_ID"]),
 										   "book_id": str(book_id)}).fetchall()
 
+	# Check for any data
 	if not data_result:
+
+		# Insert the comment and star rating of the user to the Database
 		sql_command = """INSERT INTO review_records(comment_details, star_rating, username, book_id, user_id)
 									VALUES(:comment_details, :star_rating, :username, :book_id, :user_id)"""
 		db.execute(sql_command, {"comment_details":comment_details,
@@ -451,10 +451,13 @@ def api(isbn_number):
 
 	print("API book ISBN: ", isbn_number)
 
+	# Get information for the ISBN being inputed in the URL
 	sql_command = """SELECT * FROM book_records WHERE isbn = :isbn_number"""
 	book_data = db.execute(sql_command, {"isbn_number":isbn_number}).fetchall()
 
 	if book_data:
+
+		# Display the information we have on that book on the page as JSON
 		print("Book found")
 		sql_command = """SELECT AVG(star_rating) FROM review_records WHERE book_id = :book_id"""
 		local_average_rating = db.execute(sql_command, {"book_id": str(book_data[0][0])}).fetchall()
@@ -509,17 +512,14 @@ def login():
 		
 		session.clear()
 
+		# Get input from the page
 		username = str(request.form.get("username"))
 		password = str(request.form.get("password"))
-
-		if len(username.split(" ")) > 1 or len(password.split(" ")) > 1:
-			print("Username must not contain spaces")
-			flash("Username must not contain spaces!", "error")
-			return redirect("/login")
 
 		sql_command = """SELECT user_id, password FROM users WHERE username = :username OR email = :username"""
 		data_result = db.execute(sql_command, {"username": username}).fetchall()
 
+		# Check if the password matches
 		if len(data_result) == 1 and check_password_hash(data_result[0][1], str(password)):
 			session["USER_ID"] = data_result[0][0]
 			session["USERNAME"] = str(username)
@@ -684,11 +684,6 @@ def check_email():
 @login_required
 def account():
 	"""SHOW ACCOUNT DETAILS"""
-
-	if not session:
-		print("Login first to see account details!")
-		flash("You need to login to go to that page!", "error")
-		return redirect("/login")
 
 	account_details = []
 
