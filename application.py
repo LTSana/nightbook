@@ -34,6 +34,7 @@ def after_request(response):
 # Configure session to use filesystem
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config["SECRET_KEY"] = "qwertyuiopasdfghjklzxcvbnm0987654321"
 Session(app)
 
 # Set up database
@@ -86,7 +87,7 @@ def search_bar_prediction():
 
 				prediction_data.append({"SEARCH_RESULT": isbn_result[alpha][0]})
 
-		# Searchers for TITLE in the DAtabase
+		# Searchers for TITLE in the Database
 		sql_command = """SELECT title FROM book_records WHERE title LIKE :title LIMIT 10"""
 		title_result = db.execute(sql_command, {"title": search_bar_input}).fetchall()
 
@@ -98,14 +99,40 @@ def search_bar_prediction():
 			for bravo in range(len(title_result)):
 
 				prediction_data.append({"SEARCH_RESULT": title_result[bravo][0]})
+		
+		# Searchers for TITLE in the Database (Using capitalization)
+		sql_command = """SELECT title FROM book_records WHERE title LIKE :title LIMIT 10"""
+		title_result = db.execute(sql_command, {"title": search_bar_input.title()}).fetchall()
 
-		# Searchers for AUTHOR in the DAtabase
+		print("title DATABASE RETURNED: ", title_result)
+
+		# Add the capitalized titles to a list
+		if title_result:
+
+			for bravo in range(len(title_result)):
+
+				prediction_data.append({"SEARCH_RESULT": title_result[bravo][0]})
+
+		# Searchers for AUTHOR in the Database
 		sql_command = """SELECT author FROM book_records WHERE author LIKE :author LIMIT 10"""
 		author_result = db.execute(sql_command, {"author": search_bar_input}).fetchall()
 
 		print("author DATABASE RETURNED: ", author_result)
 
 		# Add the authors to a list
+		if author_result:
+
+			for charlie in range(len(author_result)):
+
+				prediction_data.append({"SEARCH_RESULT": author_result[charlie][0]})
+		
+		# Searchers for AUTHOR in the Database (Using capitalization)
+		sql_command = """SELECT author FROM book_records WHERE author LIKE :author LIMIT 10"""
+		author_result = db.execute(sql_command, {"author": search_bar_input}).fetchall()
+
+		print("author DATABASE RETURNED: ", author_result)
+
+		# Add the capitalized authors to a list
 		if author_result:
 
 			for charlie in range(len(author_result)):
@@ -149,7 +176,80 @@ def search_book():
 												 "title": search_bar_input,
 												 "author": search_bar_input}).fetchall()
 
-		print("DATABASE RETURNED: ", data_returned)
+		# Check if we got any results from the database
+		if data_returned:
+
+			for alpha in range(len(data_returned)):
+
+				book_results = None
+				api_available = None
+				local_count_review_data = None
+				local_average_rating = None
+
+				# Get information about the book from GoodReads API
+				try:
+					book_results = requests.get("https://www.goodreads.com/book/review_counts.json",
+												params={"key": "2JuXZrNjr33dMxqSTgkVfA",
+												"isbns": data_returned[alpha][1]}).json()
+					api_available = True
+				except:
+					print("Failed to get JSON API from GoodReads")
+					api_available = False
+
+				print("API: ", book_results)
+				print()
+
+				# Get the average local rating from the Databse
+				sql_command = """SELECT AVG(star_rating) FROM review_records WHERE book_id = :book_id_given"""
+				local_average_rating = db.execute(sql_command, {"book_id_given": str(data_returned[alpha][0])}).fetchall()
+
+				if not local_average_rating[0][0]:
+					local_average_rating = "0"
+
+				print("LOCAL AVERAGE RATING: ", str(local_average_rating[0][0]))
+				print()
+
+				# Get the total amount of reviews locally
+				sql_command = """SELECT count(*) FROM review_records WHERE book_id = :book_id_given"""
+				local_count_review_data = db.execute(sql_command, {"book_id_given": str(data_returned[alpha][0])}).fetchall()
+
+				print("LOCAL COUNT: ", local_count_review_data[0][0])
+				print()
+
+				if api_available:
+					book_data.append({"book_id": data_returned[alpha][0],
+									"isbn": data_returned[alpha][1],
+									"title": data_returned[alpha][2],
+									"author": data_returned[alpha][3],
+									"year": data_returned[alpha][4],
+									"local_reviews_count": local_count_review_data[0][0],
+									"local_average_rating": round(float(local_average_rating[0][0]), 2),
+									"work_ratings_count": book_results["books"][0]["work_ratings_count"],
+									"work_reviews_count": book_results["books"][0]["work_reviews_count"],
+									"average_online_rating": book_results["books"][0]["average_rating"]})
+				else:
+					book_data.append({"book_id": data_returned[alpha][0],
+									"isbn": data_returned[alpha][1],
+									"title": data_returned[alpha][2],
+									"author": data_returned[alpha][3],
+									"year": data_returned[alpha][4],
+									"local_reviews_count": local_count_review_data[0][0],
+									"local_average_rating": round(float(local_average_rating[0][0]), 2),
+									"work_ratings_count": "0",
+									"work_reviews_count": "0",
+									"average_online_rating": "0"})
+
+		# Using capitalization
+		# Searches for book details in the Database
+		sql_command = """SELECT * FROM book_records WHERE isbn LIKE :isbn
+														  OR
+														  title LIKE :title
+														  OR
+														  author LIKE :author
+														  LIMIT 500"""
+		data_returned = db.execute(sql_command, {"isbn": search_bar_input,
+												 "title": search_bar_input,
+												 "author": search_bar_input.title()}).fetchall()
 
 		# Check if we got any results from the database
 		if data_returned:
