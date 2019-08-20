@@ -29,9 +29,9 @@ if not os.getenv("DATABASE_URL"):
 # If you are making any CSS changes activate these to not save Cache of the page
 @app.after_request
 def after_request(response):
-    #response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    #response.headers["Expires"] = 0
-    #response.headers["Pragma"] = "no-cache"
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Expires"] = 0
+    response.headers["Pragma"] = "no-cache"
     return response
 
 # Configure session to use filesystem
@@ -78,7 +78,7 @@ def search_bar_prediction():
 		search_bar_input = "%"+search_bar_input+"%"
 
 		# Searches for ISBN in the Database
-		sql_command = """SELECT isbn FROM book_records WHERE isbn LIKE :isbn LIMIT 10"""
+		sql_command = """SELECT isbn FROM book_records WHERE isbn ILIKE :isbn LIMIT 10"""
 		isbn_result = db.execute(sql_command, {"isbn": search_bar_input}).fetchall()
 
 		print("isbn DATABASE RETURNED: ", isbn_result)
@@ -99,7 +99,7 @@ def search_bar_prediction():
 					prediction_data.append({"SEARCH_RESULT": isbn_result[alpha][0]})
 
 		# Searchers for TITLE in the Database
-		sql_command = """SELECT title FROM book_records WHERE title LIKE :title LIMIT 10"""
+		sql_command = """SELECT title FROM book_records WHERE title ILIKE :title LIMIT 10"""
 		title_result = db.execute(sql_command, {"title": search_bar_input}).fetchall()
 
 		print("title DATABASE RETURNED: ", title_result)
@@ -118,30 +118,9 @@ def search_bar_prediction():
 
 				if add_item:
 					prediction_data.append({"SEARCH_RESULT": title_result[bravo][0]})
-		
-		# Searchers for TITLE in the Database (Using capitalization)
-		sql_command = """SELECT title FROM book_records WHERE title LIKE :title LIMIT 10"""
-		title_result = db.execute(sql_command, {"title": search_bar_input.title()}).fetchall()
-
-		print("title DATABASE RETURNED: ", title_result)
-
-		# Add the capitalized titles to a list
-		if title_result:
-
-			for charlie in range(len(title_result)):
-
-				# Make sure there aren't any duplicates in the Datalist
-				add_item = True
-				if prediction_data:
-					for charlie_1 in range(len(prediction_data)):
-						if prediction_data[charlie_1]["SEARCH_RESULT"] == title_result[charlie][0]:
-							add_item = False
-
-				if add_item:
-					prediction_data.append({"SEARCH_RESULT": title_result[charlie][0]})
 
 		# Searchers for AUTHOR in the Database
-		sql_command = """SELECT author FROM book_records WHERE author LIKE :author LIMIT 10"""
+		sql_command = """SELECT author FROM book_records WHERE author ILIKE :author LIMIT 10"""
 		author_result = db.execute(sql_command, {"author": search_bar_input}).fetchall()
 
 		print("author DATABASE RETURNED: ", author_result)
@@ -160,27 +139,6 @@ def search_bar_prediction():
 
 				if add_item:
 					prediction_data.append({"SEARCH_RESULT": author_result[delta][0]})
-		
-		# Searchers for AUTHOR in the Database (Using capitalization)
-		sql_command = """SELECT author FROM book_records WHERE author LIKE :author LIMIT 10"""
-		author_result = db.execute(sql_command, {"author": search_bar_input.title()}).fetchall()
-
-		print("author DATABASE RETURNED: ", author_result)
-
-		# Add the capitalized authors to a list
-		if author_result:
-
-			for echo in range(len(author_result)):
-
-				# Make sure there aren't any duplicates in the Datalist
-				add_item = True
-				if prediction_data:
-					for echo_1 in range(len(prediction_data)):
-						if prediction_data[echo_1]["SEARCH_RESULT"] == author_result[echo][0]:
-							add_item = False
-
-				if add_item:
-					prediction_data.append({"SEARCH_RESULT": author_result[echo][0]})
 
 		print("FINAL RESULT: ", prediction_data)
 
@@ -209,11 +167,11 @@ def search_book():
 		search_bar_input = "%"+search_bar_input+"%"
 
 		# Searches for book details in the Database
-		sql_command = """SELECT * FROM book_records WHERE isbn LIKE :isbn
+		sql_command = """SELECT * FROM book_records WHERE isbn ILIKE :isbn
 														  OR
-														  title LIKE :title
+														  title ILIKE :title
 														  OR
-														  author LIKE :author
+														  author ILIKE :author
 														  LIMIT 100"""
 		data_returned = db.execute(sql_command, {"isbn": search_bar_input,
 												 "title": search_bar_input,
@@ -285,124 +243,6 @@ def search_book():
 									"work_ratings_count": "0",
 									"work_reviews_count": "0",
 									"average_online_rating": "0"})
-		
-		# Using capitalization
-		# Searches for book details in the Database
-		data_returned = None
-		sql_command = """SELECT * FROM book_records WHERE isbn LIKE :isbn
-														  OR
-														  title LIKE :title
-														  OR
-														  author LIKE :author
-														  LIMIT 100"""
-		data_returned = db.execute(sql_command, {"isbn": search_bar_input,
-												 "title": search_bar_input.title(),
-												 "author": search_bar_input.title()}).fetchall()
-		print("CAP: ", data_returned)
-		# Check if we got any results from the database
-		if data_returned:
-
-			for bravo in range(len(data_returned)):
-
-				book_results = None
-				api_available = None
-				local_count_review_data = None
-				local_average_rating = None
-				book_cover_thumbnail = None
-
-				# Get information about the book from GoodReads API
-				try:
-					book_results = requests.get("https://www.goodreads.com/book/review_counts.json",
-												params={"key": "2JuXZrNjr33dMxqSTgkVfA",
-												"isbns": data_returned[bravo][1]}).json()
-					api_available = True
-				except:
-					print("Failed to get JSON API from GoodReads")
-					api_available = False
-				print("API: ", book_results)
-				print()
-
-				# Get the average local rating from the Databse
-				sql_command = """SELECT AVG(star_rating) FROM review_records WHERE book_id = :book_id_given"""
-				local_average_rating = db.execute(sql_command, {"book_id_given": str(data_returned[bravo][0])}).fetchall()
-
-				if not local_average_rating[0][0]:
-					local_average_rating = "0"
-				print("LOCAL AVERAGE RATING: ", str(local_average_rating[0][0]))
-				print()
-
-				# Get the total amount of reviews locally
-				sql_command = """SELECT count(*) FROM review_records WHERE book_id = :book_id_given"""
-				local_count_review_data = db.execute(sql_command, {"book_id_given": str(data_returned[bravo][0])}).fetchall()
-				print("LOCAL COUNT: ", local_count_review_data[0][0])
-				print()
-				
-				book_cover_thumbnail = "http://covers.openlibrary.org/b/isbn/"+data_returned[bravo][1]+"-M.jpg"
-				print("USING COVER: ", book_cover_thumbnail)
-				print()
-
-				if api_available:
-					if book_data:
-						prevent_duplication = False
-						for charlie in range(len(book_data)):
-							if str(data_returned[bravo][1]) == book_data[charlie]["isbn"]:
-								prevent_duplication = True
-
-						if not prevent_duplication:
-							book_data.append({"book_id": data_returned[bravo][0],
-											"isbn": data_returned[bravo][1],
-											"title": data_returned[bravo][2],
-											"author": data_returned[bravo][3],
-											"year": data_returned[bravo][4],
-											"cover": book_cover_thumbnail,
-											"local_reviews_count": local_count_review_data[0][0],
-											"local_average_rating": round(float(local_average_rating[0][0]), 2),
-											"work_ratings_count": book_results["books"][0]["work_ratings_count"],
-											"work_reviews_count": book_results["books"][0]["work_reviews_count"],
-											"average_online_rating": book_results["books"][0]["average_rating"]})
-					else:
-						book_data.append({"book_id": data_returned[bravo][0],
-											"isbn": data_returned[bravo][1],
-											"title": data_returned[bravo][2],
-											"author": data_returned[bravo][3],
-											"year": data_returned[bravo][4],
-											"cover": book_cover_thumbnail,
-											"local_reviews_count": local_count_review_data[0][0],
-											"local_average_rating": round(float(local_average_rating[0][0]), 2),
-											"work_ratings_count": book_results["books"][0]["work_ratings_count"],
-											"work_reviews_count": book_results["books"][0]["work_reviews_count"],
-											"average_online_rating": book_results["books"][0]["average_rating"]})
-				else:
-					if book_data:
-						prevent_duplication = False
-						for delta in range(len(book_data)):
-							if str(data_returned[bravo][1]) == book_data[delta]["isbn"]:
-								prevent_duplication = True
-
-						if not prevent_duplication:
-							book_data.append({"book_id": data_returned[bravo][0],
-											"isbn": data_returned[bravo][1],
-											"title": data_returned[bravo][2],
-											"author": data_returned[bravo][3],
-											"year": data_returned[bravo][4],
-											"cover": book_cover_thumbnail,
-											"local_reviews_count": local_count_review_data[0][0],
-											"local_average_rating": round(float(local_average_rating[0][0]), 2),
-											"work_ratings_count": "0",
-											"work_reviews_count": "0",
-											"average_online_rating": "0"})
-					else:
-						book_data.append({"book_id": data_returned[bravo][0],
-											"isbn": data_returned[bravo][1],
-											"title": data_returned[bravo][2],
-											"author": data_returned[bravo][3],
-											"year": data_returned[bravo][4],
-											"cover": book_cover_thumbnail,
-											"local_reviews_count": local_count_review_data[0][0],
-											"local_average_rating": round(float(local_average_rating[0][0]), 2),
-											"work_ratings_count": "0",
-											"work_reviews_count": "0",
-											"average_online_rating": "0"})
 
 	return jsonify({"BOOK_RESULTS": book_data})
 
@@ -928,4 +768,4 @@ def account():
 
 
 if __name__ == "__main__":
-	serve(app)
+	app.run()

@@ -120,9 +120,9 @@ function search_bar_click() {
 												<li class='card-text'><span id='card_items'>Online rates</span>: "+ data.BOOK_RESULTS[i].work_ratings_count +"</li> \
 											</ul> \
 											<img src='"+ online_rating_image +"' style='width: 80%;' id='online_stars'> \
-											<label for='online_stars'><span id='card_items'>Average online rate</span>: "+ data.BOOK_RESULTS[i].average_online_rating +"</label> \
+											<label for='online_stars'><span id='card_items'>Avg. online rate</span>: "+ data.BOOK_RESULTS[i].average_online_rating +"</label> \
 											<img src='"+ local_rating_image +"' style='width: 80%;' id='local_stars'> \
-											<label for='local_stars'><span id='card_items'>Average Night Book rate</span>: "+ data.BOOK_RESULTS[i].local_average_rating +"</label> \
+											<label for='local_stars'><span id='card_items'>Avg. Night Book rate</span>: "+ data.BOOK_RESULTS[i].local_average_rating +"</label> \
 											<br> \
 											<ul class='list-unstyled'> \
 												<li class='card-text'><span id='card_items'>Online Reviews</span>: "+ data.BOOK_RESULTS[i].work_reviews_count +"</li> \
@@ -200,9 +200,9 @@ function search_bar_click() {
 												<li class='card-text'><span id='card_items'>Online rates</span>: "+ data.BOOK_RESULTS[i].work_ratings_count +"</li> \
 											</ul> \
 											<img src='"+ online_rating_image +"' style='width: 80%;' id='online_stars'> \
-											<label for='online_stars'><span id='card_items'>Average online rate</span>: "+ data.BOOK_RESULTS[i].average_online_rating +"</label> \
+											<label for='online_stars'><span id='card_items'>Avg. online rate</span>: "+ data.BOOK_RESULTS[i].average_online_rating +"</label> \
 											<img src='"+ local_rating_image +"' style='width: 80%;' id='local_stars'> \
-											<label for='local_stars'><span id='card_items'>Average Night Book rate</span>: "+ data.BOOK_RESULTS[i].local_average_rating +"</label> \
+											<label for='local_stars'><span id='card_items'>Avg. Night Book rate</span>: "+ data.BOOK_RESULTS[i].local_average_rating +"</label> \
 											<br> \
 											<ul class='list-unstyled'> \
 												<li class='card-text'><span id='card_items'>Online Reviews</span>: "+ data.BOOK_RESULTS[i].work_reviews_count +"</li> \
