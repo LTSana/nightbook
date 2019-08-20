@@ -32,6 +32,7 @@ function check_prediction_search() {
 // Search the Database for book details
 var typingtimer_search;
 function search_bar_click() {
+	event.preventDefault();
 	// Show a loading gif
 	document.getElementById("book_results").innerHTML = "<img alt='loading...' id='loading_gif' src='static/loading_gifs/double_ring.gif'>";
 
