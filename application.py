@@ -29,9 +29,9 @@ if not os.getenv("DATABASE_URL"):
 # If you are making any CSS changes activate these to not save Cache of the page
 @app.after_request
 def after_request(response):
-    #response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    #response.headers["Expires"] = 0
-    #response.headers["Pragma"] = "no-cache"
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Expires"] = 0
+    response.headers["Pragma"] = "no-cache"
     return response
 
 # Configure session to use filesystem
@@ -741,6 +741,7 @@ def account():
 	"""SHOW ACCOUNT DETAILS"""
 
 	account_details = []
+	book_data = []
 	avg_rating_data_result = "0.00"
 	count_data_result = None
 
@@ -752,6 +753,18 @@ def account():
 
 	sql_command = """SELECT AVG(star_rating) FROM review_records WHERE user_id = :user_id"""
 	avg_rating_data_result = db.execute(sql_command, {"user_id": str(session["USER_ID"])}).fetchall()
+	
+	if count_data_result:
+		sql_command = """SELECT book_id FROM review_records WHERE user_id =:user_id"""
+		book_id = db.execute(sql_command, {"user_id": str(session["USER_ID"])}).fetchall()
+
+		for alpha in range(len(book_id)):
+
+			sql_command = """SELECT title FROM book_records WHERE book_id = :book_id"""
+			book_title = db.execute(sql_command, {"book_id": book_id[alpha][0]}).fetchall()
+
+			book_data.append({"book_id": int(book_id[alpha][0]),
+							  "book_title": book_title[0][0]})
 
 	# Prevent NoneType Error in float covertion
 	if not avg_rating_data_result[0][0]:
@@ -764,8 +777,9 @@ def account():
 							"review_count": count_data_result[0][0],
 							"average_rating": round(float(avg_rating_data_result[0][0]), 2)})
 
-	return render_template("account.html", account_details=account_details)
+	return render_template("account.html", account_details=account_details,
+										   book_data=book_data)
 
 
 if __name__ == "__main__":
-	serve()
+	app.run()

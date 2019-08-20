@@ -7,6 +7,12 @@
 {% endblock %}
 
 {% block main %}
+<link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Kalam' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Nova Flat' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Gruppo' rel='stylesheet'>
+<link href="/static/account_style.css" rel="stylesheet" type="text/css">
+<script src="/static/account_script.js" type="text/javascript"></script>
 <body background="/static/background_images/charging_phone.png">
 	<main class="container p-5">
 		<div class="card">
@@ -14,13 +20,72 @@
 				<span id="card_header">ACCOUNT DETAILS</span>
 			</div>
 			<div class="card-body">
-				<p class="card-text">Name: {{account_details[0].first_name}} {{account_details[0].last_name}}</p>
-				<p class="card-text">Username: {{account_details[0].username}}</p>
-				<p class="card-text">E-mail: {{account_details[0].email}}</p>
-				<p class="card-text">Number of books rated: {{account_details[0].review_count}}</p>
-				<p class="card-text">Average Rating: {{account_details[0].average_rating}}</p>
+				<div class="float-right" id="history_title">
+					The Books You've Rated.
+				</div>
 				<br>
-				<p class="card-text">Need to use our API? Just go to /api/*isbn place here*</p>
+				<div class="col float-right" id="scroll_history">
+					
+					<ul class="list-unstyled">
+						{% set alpha = 0 %}
+						{% for alpha in range(book_data|length) %}
+							<a class="link" href="book_details/{{book_data[alpha].book_id}}"><li id="book_item_name">{{book_data[alpha].book_title}}</li></a>
+						{% endfor %}
+					</ul>
+					
+				</div>
+				<p class="card-text"><span id="item_style">Name</span>: {{account_details[0].first_name}} {{account_details[0].last_name}}</p>
+				<p class="card-text"><span id="item_style">Username</span>: {{account_details[0].username}}</p>
+				<p class="card-text"><span id="item_style">E-mail</span>: {{account_details[0].email}}</p>
+				<p class="card-text"><span id="item_style">Number of books rated</span>: <span id="average_rate">{{account_details[0].review_count}}</span></p>
+				<p class="card-text"><span id="item_style">Average Rating</span>: <span id="average_rate">{{account_details[0].average_rating}}</span></p>
+				<br>
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#password_changer">
+					Change Password
+				</button>
+
+				&nbsp;
+				<p class="card-text"><span id="API_style">Need to use our API? Just go to <span id="API_PATH">/api/*isbn place here*</span></span></p>
+				<!-- Modal -->
+				<div class="modal fade" id="password_changer" tabindex="-1" role="dialog" aria-labelledby="password_changer_Title" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="password_changer_Title">Password Change</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form>
+								<div class="modal-body">
+									<div class="old_pwd">
+										<label for="old_password">Old Password</label>
+										<input class="form-control" id="old_password" name="old_password" placeholder="Old Password" minlength="8" maxlength="64" type="password" required/>
+									</div>
+									<div class="new_pwd">
+										<label for="new_password">New Password</label>
+										<input class="form-control" onkeyup="check_1()" id="new_password" name="new_password" placeholder="New Password (minium 8, maximum 64)" minlength="8" maxlength="64" type="password" required/>
+										<span id="password_check">
+											<!--Javascript for this page will place an item here-->
+										</span>
+									</div>
+									<div class="cm_pwd">
+										<label for="confirm_password">Confirm Password</label>
+										<input class="form-control" onkeyup="check_2()" id="confirm_password" name="confirm_password" placeholder="Confirm Password" minlength="8" maxlength="64" type="password" required/>
+										<span id="confirm_password_check">
+											<!--Javascript for this page will place an item here-->
+										</span>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+									<button class="btn btn-primary" type="submit">Save changes</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</main>

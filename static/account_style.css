@@ -1,0 +1,34 @@
+/* CSS for account page */
+#item_style {
+  font-weight: bold; }
+
+#API_style {
+  font-family: 'Gruppo';
+  font-weight: bold;
+  color: #007c7c; }
+
+#API_PATH {
+  color: red; }
+
+#average_rate {
+  font-family: 'Nova Flat';
+  font-size: 100%;
+  color: black; }
+
+#scroll_history {
+  width: 30%;
+  height: 130px;
+  overflow-y: scroll;
+  background-color: rgba(75, 249, 255, 0.37);
+  border-radius: 2%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
+
+#history_title {
+  font-family: 'Nova Flat';
+  font-weight: bold; }
+
+#book_item_name {
+  font-family: 'Abel';
+  color: black; }
+
+/*# sourceMappingURL=account_style.css.map */
