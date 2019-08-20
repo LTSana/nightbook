@@ -12,17 +12,14 @@
 	<script src="static/index_script.js" type="text/javascript"></script>
 
 	<main class="p-5">
-		<form method="GET">
+		<form>
 			<div class="form-inline justify-content-center">
-				
 					<input id="search_bar" autofocus onkeyup="check_prediction_search()" list="list_book" class="form-control" placeholder="Search Book" type="search">
 					<datalist id="list_book">
 						<!-- Javascript will place options here -->
 					</datalist>
 					&nbsp;
-					
-					<button id="search_button" type="submit" onclick="search_bar_click()" class="btn">SEARCH</button>
-				
+					<button id="search_button" type="submit" onclick="search_bar_click()" class="btn"><i class="fa fa-search" aria-hidden="true"></i>SEARCH</button>
 			</div>
 		</form>
 	

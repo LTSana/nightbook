@@ -112,23 +112,23 @@ function search_bar_click() {
 
 					items_for_book = "<div class='card'> \
 										<div class='card-body'> \
-											<h5 class='card-title'>Title: "+ data.BOOK_RESULTS[i].title +"</h5> \
+											<img src='"+ data.BOOK_RESULTS[i].cover +"' alt='"+ data.BOOK_RESULTS[i].isbn +"_book_cover'/> \
+											<h5 class='card-title'><span id='card_items'>Title</span>: "+ data.BOOK_RESULTS[i].title +" ("+ data.BOOK_RESULTS[i].year +")</h5> \
 											<ul class='list-unstyled'> \
-												<li class='card-text'>Author: "+ data.BOOK_RESULTS[i].author +"</li> \
-												<li class='card-text'>Year: "+ data.BOOK_RESULTS[i].year +"</li> \
-												<li class='card-text'>ISBN: "+ data.BOOK_RESULTS[i].isbn +"</li> \
-												<li class='card-text'>Online rates: "+ data.BOOK_RESULTS[i].work_ratings_count +"</li> \
+												<li class='card-text'><span id='card_items'>Author</span>: "+ data.BOOK_RESULTS[i].author +"</li> \
+												<li class='card-text'><span id='card_items'>ISBN</span>: "+ data.BOOK_RESULTS[i].isbn +"</li> \
+												<li class='card-text'><span id='card_items'>Online rates</span>: "+ data.BOOK_RESULTS[i].work_ratings_count +"</li> \
 											</ul> \
 											<img src='"+ online_rating_image +"' style='width: 80%;' id='online_stars'> \
-											<label for='online_stars'>Average online rate: "+ data.BOOK_RESULTS[i].average_online_rating +"</label> \
+											<label for='online_stars'><span id='card_items'>Average online rate</span>: "+ data.BOOK_RESULTS[i].average_online_rating +"</label> \
 											<img src='"+ local_rating_image +"' style='width: 80%;' id='local_stars'> \
-											<label for='local_stars'>Average local rate: "+ data.BOOK_RESULTS[i].local_average_rating +"</label> \
+											<label for='local_stars'><span id='card_items'>Average Night Book rate</span>: "+ data.BOOK_RESULTS[i].local_average_rating +"</label> \
 											<br> \
 											<ul class='list-unstyled'> \
-												<li class='card-text'>Online Reviews: "+ data.BOOK_RESULTS[i].work_reviews_count +"</li> \
-												<li class='card-text'>Local Reviews: "+ data.BOOK_RESULTS[i].local_reviews_count +"</li> \
+												<li class='card-text'><span id='card_items'>Online Reviews</span>: "+ data.BOOK_RESULTS[i].work_reviews_count +"</li> \
+												<li class='card-text'><span id='card_items'>Night Book Reviews</span>: "+ data.BOOK_RESULTS[i].local_reviews_count +"</li> \
 											</ul> \
-											<a href='book_details/"+ data.BOOK_RESULTS[i].book_id +"'><button id='review_button' class='btn btn-primary'>View Reviews</button></a> \
+											<a href='book_details/"+ data.BOOK_RESULTS[i].book_id +"'><button id='review_button' class='btn btn-primary'><i class='fa fa-book' aria-hidden='true'></i> View Reviews</button></a> \
 										</div> \
 									</div>"
 				} else {
@@ -192,23 +192,23 @@ function search_bar_click() {
 
 					items_for_book += "<div class='card'> \
 										<div class='card-body'> \
-											<h5 class='card-title'>Title: "+ data.BOOK_RESULTS[i].title +"</h5> \
+											<img src='"+ data.BOOK_RESULTS[i].cover +"' alt='"+ data.BOOK_RESULTS[i].isbn +"_book_cover'/> \
+											<h5 class='card-title'><span id='card_items'>Title</span>: "+ data.BOOK_RESULTS[i].title +" ("+ data.BOOK_RESULTS[i].year +")</h5> \
 											<ul class='list-unstyled'> \
-												<li class='card-text'>Author: "+ data.BOOK_RESULTS[i].author +"</li> \
-												<li class='card-text'>Year: "+ data.BOOK_RESULTS[i].year +"</li> \
-												<li class='card-text'>ISBN: "+ data.BOOK_RESULTS[i].isbn +"</li> \
-												<li class='card-text'>Online rates: "+ data.BOOK_RESULTS[i].work_ratings_count +"</li> \
+												<li class='card-text'><span id='card_items'>Author</span>: "+ data.BOOK_RESULTS[i].author +"</li> \
+												<li class='card-text'><span id='card_items'>ISBN</span>: "+ data.BOOK_RESULTS[i].isbn +"</li> \
+												<li class='card-text'><span id='card_items'>Online rates</span>: "+ data.BOOK_RESULTS[i].work_ratings_count +"</li> \
 											</ul> \
 											<img src='"+ online_rating_image +"' style='width: 80%;' id='online_stars'> \
-											<label for='online_stars'>Average online rate: "+ data.BOOK_RESULTS[i].average_online_rating +"</label> \
+											<label for='online_stars'><span id='card_items'>Average online rate</span>: "+ data.BOOK_RESULTS[i].average_online_rating +"</label> \
 											<img src='"+ local_rating_image +"' style='width: 80%;' id='local_stars'> \
-											<label for='local_stars'>Average local rate: "+ data.BOOK_RESULTS[i].local_average_rating +"</label> \
+											<label for='local_stars'><span id='card_items'>Average Night Book rate</span>: "+ data.BOOK_RESULTS[i].local_average_rating +"</label> \
 											<br> \
 											<ul class='list-unstyled'> \
-												<li class='card-text'>Online Reviews: "+ data.BOOK_RESULTS[i].work_reviews_count +"</li> \
-												<li class='card-text'>Local Reviews: "+ data.BOOK_RESULTS[i].local_reviews_count +"</li> \
+												<li class='card-text'><span id='card_items'>Online Reviews</span>: "+ data.BOOK_RESULTS[i].work_reviews_count +"</li> \
+												<li class='card-text'><span id='card_items'>Night Book Reviews</span>: "+ data.BOOK_RESULTS[i].local_reviews_count +"</li> \
 											</ul> \
-											<a href='book_details/"+ data.BOOK_RESULTS[i].book_id +"'><button id='review_button' class='btn btn-primary'>View Reviews</button></a> \
+											<a href='book_details/"+ data.BOOK_RESULTS[i].book_id +"'><button id='review_button' class='btn btn-primary'><i class='fa fa-book' aria-hidden='true'></i> View Reviews</button></a> \
 										</div> \
 									</div>"
 				}

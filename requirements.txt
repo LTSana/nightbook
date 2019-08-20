@@ -6,3 +6,4 @@ SQLAlchemy
 werkzeug
 waitress
 requests
+isbnlib

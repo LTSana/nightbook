@@ -41,6 +41,10 @@ body {
 
   #loading_gif {
     width: 15%; } }
+#card_items {
+  color: #ff8800;
+  font-weight: bold; }
+
 #review_button {
   background-color: #007032;
   color: white; }

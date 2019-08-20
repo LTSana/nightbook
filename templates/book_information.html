@@ -6,6 +6,9 @@
 {% endblock %}
 
 {% block main %}
+<!--Fonts to only use on this page-->
+<link href='https://fonts.googleapis.com/css?family=Kalam' rel='stylesheet'>
+
 <link href="/static/book_info_style.css" rel="stylesheet" type="text/css">
 <script src="/static/book_info_script.js" type="text/javascript"></script>
 <div class="col-sm-3">
@@ -13,101 +16,114 @@
 </div>
 <br>
 
-<div class="container">
-	<div class="col">
-		<h1>{{book_data[0].title}}</h1>
-	</div>
-	<br>
-	<div class="col">
-		<h6>Author: {{book_data[0].author}}</h6>
-	</div>
-	<div class="col">
-		<h7>Year: {{book_data[0].year}}</h7>
-	</div>
-	<div class="col">
-		<h7>ISBN: {{book_data[0].isbn}}</h7>
-	</div>
-	<br>
-	<ul class="list-unstyled">
-		<li class='card-text'>Online rates: {{book_data[0].work_ratings_count}}</li>
-		<li class='card-text'>Online Reviews: {{book_data[0].work_reviews_count}}</li>
-		<li class='card-text'>Local Reviews: {{book_data[0].local_reviews_count}}</li>
-	</ul>
-	<div>
-		<img src="{{book_data[0].image_online_rating}}" alt="average_rating_image" id='local_stars'>
-		<label for='local_stars'>Average online rate: {{book_data[0].average_online_rating}}</label>
-	</div>
-	<div>
-		<img src="{{book_data[0].image_local_rating}}" alt="average_rating_image" id='local_stars'>
-		<label for='local_stars'>Average local rate: {{book_data[0].local_average_rating}}</label>
-	</div>
-	<div class="card">
-		<div class="card-header">
-			Local Reviews
-		</div>
+<body background="/static/background_images/sun_rise.JPG">
+	<div class="container">
+		<img src="{{book_data[0].cover}}" alt="book_cover">
 		&nbsp;
-		<div class="container">
-			{% if book_data_review %}
-				{% set alpha = 0 %}
-				{% for alpha in range(book_data_review|length) %}
-					<div class="card">
-						<div class="card-body">
-							<h6 class="card-text">User: {{book_data_review[alpha].username}}</h6>
-							<img src="{{book_data_review[alpha].rating_image}}" alt="user_rating_image" id='user_stars'>
-							<label for='local_stars'>User rated: {{book_data_review[alpha].star_rating}}</label>
-							<br>
-							<h7 class="card-text">Comment:</h7>
-							<p class="card-text col" style="background-color: gray; border-end-end-radius: 2%; color: white;">{{book_data_review[alpha].comment_details}}</p>
-							{% if book_data_review[alpha].user_id == session.USER_ID %}
-								<form action="/del_review/{{book_data_review[alpha].review_id}}/{{book_id}}" method="POST">
-									<button class="btn btn-danger">Delete Review</button>
-								</form>
-							{% endif %}
-							
-						</div>
-					</div>
-					&nbsp;
-				{% endfor %}
-			{% else %}
-				<alert class="alert alert-dark">No Reviews Available</alert>
-			{% endif %}
+		<div class="card col First_card">
+			<div class="col">
+				<h1>{{book_data[0].title}} ({{book_data[0].year}})</h1>
+			</div>
+			<br>
+			<div class="col">
+				<h6><span id="items_style">Author</span>: {{book_data[0].author}}</h6>
+			</div>
+			<div class="col">
+				<h7><span id="items_style">ISBN</span>: {{book_data[0].isbn}}</h7>
+			</div>
+			<div class="book_description">
+				<br>
+				<span id="items_style">About the book</span>:
+				<div class="col">
+					{{book_data[0].description}}
+				</div>
+			</div>
+			<br>
+			<ul class="list-unstyled">
+				<li class='card-text'><span id="items_style">Online rates</span>: {{book_data[0].work_ratings_count}}</li>
+				<li class='card-text'><span id="items_style">Online Reviews</span>: {{book_data[0].work_reviews_count}}</li>
+				<li class='card-text'><span id="items_style">Night Book Reviews</span>: {{book_data[0].local_reviews_count}}</li>
+			</ul>
+			<div>
+				<img src="{{book_data[0].image_online_rating}}" alt="average_rating_image" id='local_stars'>
+				<label for='local_stars'><span id="items_style">Avg. online rate</span>: <span id="rate_number">{{book_data[0].average_online_rating}}</span></label>
+			</div>
+			<div>
+				<img src="{{book_data[0].image_local_rating}}" alt="average_rating_image" id='local_stars'>
+				<label for='local_stars'><span id="items_style">Avg. Night Book rate</span>: <span id="rate_number">{{book_data[0].local_average_rating}}</span></label>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					Community Reviews
+				</div>
+				&nbsp;
+				<div class="container">
+					{% if book_data_review %}
+						{% set alpha = 0 %}
+						{% for alpha in range(book_data_review|length) %}
+							<div class="card">
+								<div class="card-body">
+									<h6 class="card-text"><span id="items_style"><i class="fa fa-user" aria-hidden="true"></i> User</span>: {{book_data_review[alpha].username}}</h6>
+									<img src="{{book_data_review[alpha].rating_image}}" alt="user_rating_image" id='user_stars'>
+									<label for='local_stars'><span id="items_style">User rated</span>: {{book_data_review[alpha].star_rating}}</label>
+									<br>
+									<h7 class="card-text"><span id="items_style">Comment</span>:</h7>
+									<p class="card-text col" style="background-color: gray; border-end-end-radius: 2%; color: white;">{{book_data_review[alpha].comment_details}}</p>
+									{% if book_data_review[alpha].user_id == session.USER_ID %}
+										<form action="/del_review/{{book_data_review[alpha].review_id}}/{{book_id}}" method="POST">
+											<button class="btn btn-danger">Delete Review</button>
+										</form>
+									{% endif %}
+									
+								</div>
+							</div>
+							&nbsp;
+						{% endfor %}
+					{% else %}
+						<alert class="alert alert-dark">No Reviews. Be the first to review "{{book_data[0].title}}".</alert>
+					{% endif %}
 
-		</div>
-		&nbsp;
-		<div class="card-footer">
-			<div class="card-body">
-				<form action="/submit_review/{{book_id}}" method="POST">
-					<div class="form-group">
-						<div>
-							RATE: 
-							<a href="#1" id="left_star_1" onclick="left_star_1_hot()"><img id="image_1" src="/static/book_star_images/left_half_book_empty.png" alt="select_star"></a>
-							<a href="#2" id="right_star_1" onclick="right_star_1_hot()"><img id="image_2" src="/static/book_star_images/right_half_book_empty.png" alt="select_star"></a>
-							<a href="#3" id="left_star_2" onclick="left_star_2_hot()"><img id="image_1" src="/static/book_star_images/left_half_book_empty.png" alt="select_star"></a>
-							<a href="#4" id="right_star_2" onclick="right_star_2_hot()"><img id="image_2" src="/static/book_star_images/right_half_book_empty.png" alt="select_star"></a>
-							<a href="#5" id="left_star_3" onclick="left_star_3_hot()"><img id="image_1" src="/static/book_star_images/left_half_book_empty.png" alt="select_star"></a>
-							<a href="#6" id="right_star_3" onclick="right_star_3_hot()"><img id="image_2" src="/static/book_star_images/right_half_book_empty.png" alt="select_star"></a>
-							<a href="#7" id="left_star_4" onclick="left_star_4_hot()"><img id="image_1" src="/static/book_star_images/left_half_book_empty.png" alt="select_star"></a>
-							<a href="#8" id="right_star_4" onclick="right_star_4_hot()"><img id="image_2" src="/static/book_star_images/right_half_book_empty.png" alt="select_star"></a>
-							<a href="#9" id="left_star_5" onclick="left_star_5_hot()"><img id="image_1" src="/static/book_star_images/left_half_book_empty.png" alt="select_star"></a>
-							<a href="#10" id="right_star_5" onclick="right_star_5_hot()"><img id="image_2" src="/static/book_star_images/right_half_book_empty.png" alt="select_star"></a>
-						</div>
-						<div id="book_rate_count">
-							<label for="book_rate_selected">Your rating</label>
-							<input id="book_rate_selected" name="book_rate_selected" type="text" value="0" class="form-control" style="width: 5%;">
-						</div>
-						<label for="comment_box">Comment</label>
-						<textarea class="form-control" id="comment_box" name="comment_box" rows="5" required></textarea>
-						<br>
+				</div>
+				&nbsp;
+				<div class="card-footer">
+					<div class="card-body">
+						<form action="/submit_review/{{book_id}}" method="POST">
+							<div class="form-group">
+								<div class="review_">
+									<h4><i class="fa fa-pencil-square-o" aria-hidden="true"></i> LEAVE A REVIEW</h4>
+								</div>
+								<div>
+									RATE: 
+									<a href="#1" id="left_star_1" onclick="left_star_1_hot()"><img id="image_1" src="/static/book_star_images/left_half_book_empty.png" alt="select_star"></a>
+									<a href="#2" id="right_star_1" onclick="right_star_1_hot()"><img id="image_2" src="/static/book_star_images/right_half_book_empty.png" alt="select_star"></a>
+									<a href="#3" id="left_star_2" onclick="left_star_2_hot()"><img id="image_1" src="/static/book_star_images/left_half_book_empty.png" alt="select_star"></a>
+									<a href="#4" id="right_star_2" onclick="right_star_2_hot()"><img id="image_2" src="/static/book_star_images/right_half_book_empty.png" alt="select_star"></a>
+									<a href="#5" id="left_star_3" onclick="left_star_3_hot()"><img id="image_1" src="/static/book_star_images/left_half_book_empty.png" alt="select_star"></a>
+									<a href="#6" id="right_star_3" onclick="right_star_3_hot()"><img id="image_2" src="/static/book_star_images/right_half_book_empty.png" alt="select_star"></a>
+									<a href="#7" id="left_star_4" onclick="left_star_4_hot()"><img id="image_1" src="/static/book_star_images/left_half_book_empty.png" alt="select_star"></a>
+									<a href="#8" id="right_star_4" onclick="right_star_4_hot()"><img id="image_2" src="/static/book_star_images/right_half_book_empty.png" alt="select_star"></a>
+									<a href="#9" id="left_star_5" onclick="left_star_5_hot()"><img id="image_1" src="/static/book_star_images/left_half_book_empty.png" alt="select_star"></a>
+									<a href="#10" id="right_star_5" onclick="right_star_5_hot()"><img id="image_2" src="/static/book_star_images/right_half_book_empty.png" alt="select_star"></a>
+								</div>
+								<div id="book_rate_count">
+									<label for="book_rate_selected">Your rating</label>
+									<input id="book_rate_selected" name="book_rate_selected" type="text" value="0" class="form-control" style="width: 5%;">
+								</div>
+								<label for="comment_box">Comment</label>
+								<textarea class="form-control" id="comment_box" name="comment_box" rows="5" required></textarea>
+								<br>
 
-						{% if username_not_allowed %}
-							<button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Post Review</button> *You not allowed to add another comment. Max: 1
-						{% else %}
-							<button type="submit" class="btn btn-primary">Post Review</button>
-						{% endif %}
+								{% if username_not_allowed %}
+									<button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Post Review</button> *NOTE: You not allowed to add another comment. Max: 1
+								{% else %}
+									<button type="submit" class="btn btn-primary">Post Review</button>
+								{% endif %}
+							</div>
+						</form>
 					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</body>
 {% endblock %}

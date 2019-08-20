@@ -10,6 +10,8 @@
 		<!-- The little icon on the browser -->
 		<link href="/static/little_book_icon.png" rel="shortcut icon" type="image/png"/>
 
+		<!--Font Awesome for icons-->
+		<script src="https://kit.fontawesome.com/0c7200f489.js"></script>
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		
@@ -24,7 +26,7 @@
 		</title>
 	</head>
 	<body>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 0, 0, 0.5);">
 			<a class="navbar-brand" href="/">Night Book</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -32,25 +34,25 @@
 			<div class="collapse navbar-collapse" id="navbar">
 				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 					<li class="nav-item active">
-						<a class="nav-link" href="/">Home</a>
+						<a class="nav-link" href="/"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
 					</li>
 				</ul>
 				<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 					{% if not session.USER_ID %}
 					<li class="nav-item">
-						<a class="nav-link" href="/register">Register</a>
+						<a class="nav-link" href="/register"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
 					</li>
 					{% endif %}
 					{% if not session.USER_ID %}
 						<li class="nav-item">
-							<a class="nav-link" href="/login">Login</a>
+							<a class="nav-link" href="/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
 						</li>
 					{% else %}
 						<li class="nav-item">
-							<a class="nav-link" href="/account">Account</a>
+							<a class="nav-link" href="/account"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Account</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/logout">Logout</a>
+							<a class="nav-link" href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
 						</li>
 					{% endif %}
 				</ul>

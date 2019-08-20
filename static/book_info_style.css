@@ -25,6 +25,37 @@
     width: 6%; }
 
   #image_2 {
-    width: 6%; } }
+    width: 6%; }
+
+  .First_card {
+    left: 1%;
+    width: 95%; }
+
+  img {
+    width: 50%;
+    align-content: center; } }
+img {
+  width: 20%;
+  align-content: center;
+  box-shadow: 0 4% 8% 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
+
+body {
+  background-position: center;
+  background-repeat: repeat;
+  -webkit-background-size: auto;
+  -moz-background-size: auto;
+  -o-background-size: auto;
+  background-size: auto;
+  font-family: sans-serif;
+  background-attachment: fixed; }
+
+#items_style {
+  font-weight: bold;
+  color: black; }
+
+#rate_number {
+  font-family: 'Kalam';
+  font-size: 150%;
+  color: #ff9100; }
 
 /*# sourceMappingURL=book_info_style.css.map */

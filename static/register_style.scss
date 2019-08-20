@@ -23,3 +23,16 @@
 .card-header {
 	font-size: 110%;
 }
+body {
+	-webkit-background-size: auto;
+    -moz-background-size: auto;
+    -o-background-size: auto;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h3 {
+	font-family: cursive;
+}
