@@ -594,9 +594,10 @@ def register():
 		sql_command = """SELECT * FROM users WHERE username = :username"""
 		data_username_result = db.execute(sql_command, {"username":username}).fetchall()
 
-		# Check if email isn't in use already to prevent duplicates
-		sql_command = """SELECT * FROM users WHERE email = :email"""
-		data_email_result = db.execute(sql_command, {"email":email}).fetchall()
+		if email and email != "NOT_AVAILABLE":
+			# Check if email isn't in use already to prevent duplicates
+			sql_command = """SELECT * FROM users WHERE email = :email"""
+			data_email_result = db.execute(sql_command, {"email":email}).fetchall()
 
 		if data_username_result:
 			print("username already in use.")
@@ -689,7 +690,7 @@ def account():
 	"""SHOW ACCOUNT DETAILS"""
 
 	account_details = []
-	avg_rating_data_result = None
+	avg_rating_data_result = "0.00"
 	count_data_result = None
 
 	sql_command = """SELECT username, first_name, last_name, email FROM users WHERE user_id = :user_id"""
