@@ -14,14 +14,14 @@ All images used in the App are my own, avoiding copyright issues, the only thing
 ## How to setup the App
 1. Install Python 3 or higher
 2. Open Command Prompt
-3. Run: "cd " + the path to the program. Example( "cd Documents\projects\project1" )
-4. Run: "pip install -r requirements.txt"
-5. Run: "set FLASK_APP=application.py"
-6. Run: "set FLASK_ENV=development"
-7. Run: "set FLASK_DEBUG=1"
-8. Run: "set DATABASE_URL=" + add the URI or URL of your Database here. If you don't have one go to www.heroku.com and get one. If you using a local Database change the code in application.py to work with your local Database.
-9. Run: "python import.py" You will be prompt with options to make tables that are required by the App and an option to import all the book.csv info to the Databse.
-8. Run: "python -m flask run" or "python application.py"
+3. Run: ```cd ``` + the path to the program. Example( "cd Documents\projects\project1" )
+4. Run: ```pip install -r requirements.txt```
+5. Run: ```set FLASK_APP=application.py```
+6. Run: ```set FLASK_ENV=development```
+7. Run: ```set FLASK_DEBUG=1```
+8. Run: ```set DATABASE_URL=``` + add the URI or URL of your Database here. If you don't have one go to [Heroku](https://dashboard.heroku.com/) and get one. If you using a local Database change the code in application.py to work with your local Database.
+9. Run: ```python import.py``` You will be prompt with options to make tables that are required by the App and an option to import all the book.csv info to the Databse.
+8. Run: ```python -m flask run``` or ```python application.py```
 
 *If you followed the instructions everything should run well
 
