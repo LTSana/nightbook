@@ -702,6 +702,10 @@ def account():
 	sql_command = """SELECT AVG(star_rating) FROM review_records WHERE user_id = :user_id"""
 	avg_rating_data_result = db.execute(sql_command, {"user_id": str(session["USER_ID"])}).fetchall()
 
+	# Prevent NoneType Error in float covertion
+	if not avg_rating_data_result[0][0]:
+		avg_rating_data_result = "0.00"
+
 	account_details.append({"username": data_result[0][0],
 							"first_name": data_result[0][1],
 							"last_name": data_result[0][2],
