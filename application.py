@@ -553,6 +553,9 @@ def register():
 	"""Page for registering"""
 
 	if request.method == "POST":
+
+		data_username_result = None
+		data_email_result = None
 		
 		# Get input from form
 		username = str(request.form.get("username"))
