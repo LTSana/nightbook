@@ -781,5 +781,38 @@ def account():
 										   book_data=book_data)
 
 
+@app.route("/change_password", methods=["POST"])
+@login_required
+def change_password():
+	"""Change password of user"""
+
+	old_password = str(request.form.get("old_password"))
+	new_password = str(request.form.get("new_password"))
+	confirm_password = str(request.form.get("confirm_password"))
+
+	if len(new_password) > 7 and len(new_password) < 65 and new_password == confirm_password:
+		sql_command = """SELECT password FROM users WHERE user_id = :user_id"""
+		data_result = db.execute(sql_command, {"user_id": session["USER_ID"]}).fetchall()
+
+		if check_password_hash(data_result[0][0], old_password):
+			
+			new_password = generate_password_hash(new_password, salt_length=512)
+
+			sql_command = """UPDATE users SET password = :new_password WHERE user_id = :user_id"""
+			db.execute(sql_command, {"new_password": new_password,
+									 "user_id": session["USER_ID"]})
+			db.commit()
+			flash("Successfully Changed Password!", "success")
+			return redirect("/account")
+		else:
+			print("Wrong old password!")
+			flash("Wrong old password!", "error")
+			return redirect("/account")
+	else:
+		print("Invalid password")
+		flash("Invalid password!", "error")
+		return redirect("/account")
+
+
 if __name__ == "__main__":
 	serve(app)

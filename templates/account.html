@@ -57,15 +57,15 @@
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<form>
+							<form action="/change_password" method="POST">
 								<div class="modal-body">
 									<div class="old_pwd">
 										<label for="old_password">Old Password</label>
-										<input class="form-control" id="old_password" name="old_password" placeholder="Old Password" minlength="8" maxlength="64" type="password" required/>
+										<input class="form-control" autocomplete="off" id="old_password" name="old_password" placeholder="Old Password" minlength="8" maxlength="64" type="password" required/>
 									</div>
 									<div class="new_pwd">
 										<label for="new_password">New Password</label>
-										<input class="form-control" onkeyup="check_1()" id="new_password" name="new_password" placeholder="New Password (minium 8, maximum 64)" minlength="8" maxlength="64" type="password" required/>
+										<input class="form-control" autocomplete="off" onkeyup="check_1()" id="new_password" name="new_password" placeholder="New Password (minium 8, maximum 64)" minlength="8" maxlength="64" type="password" required/>
 										<span id="password_check">
 											<!--Javascript for this page will place an item here-->
 										</span>
