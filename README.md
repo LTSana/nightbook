@@ -54,14 +54,16 @@ The API page displays the information my Database has of the books including loc
 
 # What I learnt
 
-How to make selective rating items.
-Prevent overflow of inputs to the server from javascript.
-Better SCSS use.
-Datalisting.
-Better SQL use.
-Better use of the URL to get data.
-Better Javascript use.
-Error handles.
-How to read CSV format and importing it to the Dabase.
+* How to make selective rating items.
+* Prevent overflow of inputs to the server from javascript.
+* Better SCSS use.
+* Datalisting.
+* Better SQL use.
+* Better use of the URL to get data.
+* Better Javascript use.
+* Error handles.
+* How to read CSV format and importing it to the Dabase.
+* Better understanding of API uses.
+* Good password hashing
 
 Web Programming with Python and JavaScript
